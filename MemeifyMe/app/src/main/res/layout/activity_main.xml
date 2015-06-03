@@ -1,5 +1,4 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,52 +8,51 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Memifier"
-        android:id="@+id/titleTextView"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="40dp" />
+
+    <Button
+        android:id="@+id/btn_camera"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true" />
+        android:layout_marginTop="60dp"
+        android:text="Take Picture" />
 
     <Button
-        android:id="@+id/camera_button"
+        android:id="@+id/btn_album"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:text="Take Picture"
-        android:layout_below="@+id/titleTextView"
+        android:layout_below="@+id/btn_camera"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="40dp"
+        android:text="Choose from Gallery" />
 
     <Button
-        android:id="@+id/album_button"
+        android:id="@+id/btn_template"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:text="Choose from Gallery"
+        android:layout_below="@+id/btn_album"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:layout_below="@+id/camera_button"
-        android:layout_centerHorizontal="true"/>
+        android:text="Choose from Template" />
 
     <Button
-        android:id="@+id/template_button"
+        android:id="@+id/btn_exit"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:text="Choose from Template"
+        android:layout_below="@+id/btn_template"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:layout_below="@+id/album_button"
-        android:layout_centerHorizontal="true"/>
-
-    <Button
-        android:id="@+id/exit_button"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:text="Exit"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/template_button"
-        android:layout_centerHorizontal="true"/>
+        android:text="Exit" />
 
 </RelativeLayout>
