@@ -1,5 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,13 +20,13 @@
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/top_caption"
+            android:id="@+id/caption_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top" />
 
         <TextView
-            android:id="@+id/bottom_caption"
+            android:id="@+id/caption_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom" />
@@ -35,16 +34,15 @@
     </FrameLayout>
 
     <EditText
-        android:id="@+id/top_editor"
+        android:id="@+id/editor_top"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
     <EditText
-        android:id="@+id/bottom_editor"
+        android:id="@+id/editor_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-
 
 </LinearLayout>
