@@ -2,9 +2,9 @@ package accesscode.c4q.nyc.memeifyme;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -13,12 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 public class Camera extends ActionBarActivity {
 
     private ImageView camera_image;
-    private TextView top_caption, bottom_caption;
-    private EditText top_editor, bottom_editor;
+    private TextView caption_top, caption_bottom;
+    private EditText editor_top, editor_bottom;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
 
@@ -31,12 +30,12 @@ public class Camera extends ActionBarActivity {
         startActivityForResult(openCamera, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
         camera_image = (ImageView) findViewById(R.id.camera_image);
-        top_caption = (TextView) findViewById(R.id.top_caption);
-        bottom_caption = (TextView) findViewById(R.id.bottom_caption);
-        top_editor = (EditText) findViewById(R.id.top_editor);
-        bottom_editor = (EditText) findViewById(R.id.bottom_editor);
+        caption_top = (TextView) findViewById(R.id.caption_top);
+        caption_bottom = (TextView) findViewById(R.id.caption_bottom);
+        editor_top = (EditText) findViewById(R.id.editor_top);
+        editor_bottom = (EditText) findViewById(R.id.editor_bottom);
 
-        top_editor.addTextChangedListener(new TextWatcher() {
+        editor_top.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -44,7 +43,7 @@ public class Camera extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                top_caption.setText(top_editor.getText().toString());
+                caption_top.setText(editor_top.getText().toString());
 
             }
 
@@ -53,7 +52,7 @@ public class Camera extends ActionBarActivity {
 
             }
         });
-        bottom_editor.addTextChangedListener(new TextWatcher() {
+        editor_bottom.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -61,7 +60,7 @@ public class Camera extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                bottom_caption.setText(bottom_editor.getText().toString());
+                caption_bottom.setText(editor_bottom.getText().toString());
 
             }
 
