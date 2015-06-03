@@ -20,7 +20,6 @@ public class Camera extends ActionBarActivity {
     private EditText editor_top, editor_bottom;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +77,6 @@ public class Camera extends ActionBarActivity {
             camera_image.setImageBitmap(photo);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
