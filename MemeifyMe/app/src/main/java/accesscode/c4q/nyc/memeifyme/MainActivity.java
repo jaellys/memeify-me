@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button camera_button;
+    private Button camera_button, gallery_button;
 
 
     @Override
@@ -20,11 +20,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         camera_button = (Button) findViewById(R.id.camera_button);
+        gallery_button = (Button) findViewById(R.id.gallery_button);
 
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Camera.class);
+                startActivity(intent);
+
+            }
+        });
+
+        gallery_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Gallery.class);
                 startActivity(intent);
 
             }
