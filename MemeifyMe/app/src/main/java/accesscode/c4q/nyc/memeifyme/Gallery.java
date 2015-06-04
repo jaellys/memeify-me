@@ -92,27 +92,7 @@ public class Gallery extends ActionBarActivity {
                 //loads the bitmap into the camera_image ImageView
                 camera_image.setImageBitmap(bitmap);
 
-            //TODO: do I need any of this code?
-//                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//
-//                // Get the cursor
-//                Cursor cursor = getContentResolver().query(selectedImage,
-//                        filePathColumn, null, null, null);
-//                // Move to first row
-//                cursor.moveToFirst();
-//
-//                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                imgDecodableString = cursor.getString(columnIndex);
-//                cursor.close();
-//                ImageView imgView = (ImageView) findViewById(R.id.camera_image);
-//                // Set the Image in ImageView after decoding the String
-//                imgView.setImageBitmap(BitmapFactory
-//                        .decodeFile(imgDecodableString));
-//
-//            } else {
-//                Toast.makeText(this, "You haven't picked Image",
-//                        Toast.LENGTH_LONG).show();
-//            }
+
         } catch (Exception e) {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
                     .show();
