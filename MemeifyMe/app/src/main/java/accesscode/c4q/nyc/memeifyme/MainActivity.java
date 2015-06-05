@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(camera);
                 break;
             case R.id.btn_album:
+                Intent gallery = new Intent(this, Gallery.class);
+                startActivity(gallery);
                 break;
             case R.id.btn_template:
                 break;
