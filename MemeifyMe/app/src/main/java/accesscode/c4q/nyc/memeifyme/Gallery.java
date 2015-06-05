@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,11 +17,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 public class Gallery extends ActionBarActivity {
 
@@ -106,21 +113,32 @@ public class Gallery extends ActionBarActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo Dison's image save
+                setContentView(R.layout.activity_camera);
+                FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
+                SaveMeme sm = new SaveMeme();
+                Bitmap bitmap = sm.loadBitmapFromView(meme);
+                sm.saveMeme(bitmap, "meme", getContentResolver());
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, mediaMountUri)); // Dison is fixing this.
+                Toast.makeText(getApplicationContext(), "Meme saved!", Toast.LENGTH_LONG).show();
             }
         });
 
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setContentView(R.layout.activity_camera);
 
-                // FIXME: I'm crashing! :(
-                Bitmap bm = captureBitmapFromView(findViewById(R.id.meme));
-                String pathOfBmp = MediaStore.Images.Media.insertImage(getContentResolver(), bm, "meme", null);
-                Uri bmpUri = Uri.parse(pathOfBmp);
+                // FIXME: Bitmap continues to be null here.
+                FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
+                SaveMeme sm = new SaveMeme();
+                Bitmap bitmap = sm.loadBitmapFromView(meme);
+                sm.saveMeme(bitmap, "meme", getContentResolver());
+
+                String pathBm = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "meme", null);
+                Uri bmUri = Uri.parse(pathBm);
 
                 Intent attachIntent = new Intent(Intent.ACTION_SEND);
-                attachIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                attachIntent.putExtra(Intent.EXTRA_STREAM, bmUri);
                 attachIntent.setType("image/png");
                 startActivity(attachIntent);
             }
@@ -136,13 +154,17 @@ public class Gallery extends ActionBarActivity {
                 photo = MediaStore.Images.Media.getBitmap(cr, selectedImage);
                 camera_image_vanilla.setImageBitmap(photo);
                 camera_image_demotivational.setImageBitmap(photo);
+
+
             } catch (Exception e) {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    public Bitmap captureBitmapFromView(View view) {
+    public Bitmap captureBitmapFromView(FrameLayout view) {
+        // Create empty bitmap, pass bitmap to Canvas obj, pass to view.draw, return
+
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
 
@@ -151,7 +173,8 @@ public class Gallery extends ActionBarActivity {
             bgDrawable.draw(canvas);
         else
             canvas.drawColor(Color.WHITE);
-        view.draw(canvas);
+
+        view.draw(canvas); // Render this view and children to Canvas
         return returnedBitmap;
     }
 }

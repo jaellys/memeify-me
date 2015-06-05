@@ -32,9 +32,6 @@
         <activity
             android:name=".Gallery"
             android:label="@string/title_activity_gallery" />
-        <activity
-            android:name=".SaveMeme"
-            android:label="@string/title_activity_save_meme" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
