@@ -29,7 +29,7 @@
             android:label="@string/title_activity_camera" />
         <activity
             android:name=".Gallery"
-            android:label="@string/title_activity_gallery" >
+            android:label="Gallery" >
         </activity>
     </application>
 
