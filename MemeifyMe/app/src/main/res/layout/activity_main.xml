@@ -8,25 +8,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/memeifier"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="40dp" />
-
-    <Button
+   <Button
         android:id="@+id/btn_camera"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="@string/btn_photo" />
+        android:layout_centerVertical="true"
+        android:text="@string/btn_main_photo" />
 
     <Button
         android:id="@+id/btn_album"
@@ -34,8 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_camera"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="@string/btn_gallery" />
+        android:text="@string/btn_main_gallery" />
 
     <Button
         android:id="@+id/btn_template"
@@ -43,8 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_album"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="@string/btn_template" />
+        android:text="@string/btn_main_template" />
 
     <Button
         android:id="@+id/btn_exit"
@@ -52,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_template"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="@string/btn_exit" />
+        android:text="@string/btn_main_exit" />
 
 </RelativeLayout>
