@@ -115,7 +115,6 @@ public class Camera extends ActionBarActivity {
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // FIXME: Bitmap continues to be null here.
                 FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
                 SaveMeme sm = new SaveMeme();
                 Bitmap bitmap = sm.loadBitmapFromView(meme);
