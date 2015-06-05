@@ -156,23 +156,6 @@ public class Gallery extends ActionBarActivity {
                     public void onClick(View view) {
                         setContentView(R.layout.activity_camera);
 
-                        // FIXME: Bitmap continues to be null here.
-                        FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
-                        SaveMeme sm = new SaveMeme();
-                        Bitmap bitmap = sm.loadBitmapFromView(meme);
-                        sm.saveMeme(bitmap, "meme", getContentResolver());
-
-                        String pathBm = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "meme", null);
-                        Uri bmUri = Uri.parse(pathBm);
-
-                        Intent attachIntent = new Intent(Intent.ACTION_SEND);
-                        attachIntent.putExtra(Intent.EXTRA_STREAM, selectedImage);
-                        attachIntent.setType("image/png");
-                        startActivity(attachIntent);
-                    }
-                });
-
-
             } catch (Exception e) {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
