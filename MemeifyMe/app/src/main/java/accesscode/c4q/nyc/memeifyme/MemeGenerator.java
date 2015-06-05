@@ -121,25 +121,25 @@ public class MemeGenerator extends ActionBarActivity {
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
-            camera_image_vanilla.setImageBitmap(photo);
-            camera_image_demotivational.setImageBitmap(photo);
-        }
-
-        if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK) {
-            Bitmap bitmap;
-            try {
-                Uri selectedImage = data.getData();
-                getContentResolver().notifyChange(selectedImage, null);
-                ContentResolver cr = getContentResolver();
-                bitmap = MediaStore.Images.Media.getBitmap(cr, selectedImage);
-                camera_image_vanilla.setImageBitmap(bitmap);
-                camera_image_demotivational.setImageBitmap(bitmap);
-            } catch (Exception e) {
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+//            photo = (Bitmap) data.getExtras().get("data");
+//            camera_image_vanilla.setImageBitmap(photo);
+//            camera_image_demotivational.setImageBitmap(photo);
+//        }
+//
+//        if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK) {
+//            Bitmap bitmap;
+//            try {
+//                Uri selectedImage = data.getData();
+//                getContentResolver().notifyChange(selectedImage, null);
+//                ContentResolver cr = getContentResolver();
+//                bitmap = MediaStore.Images.Media.getBitmap(cr, selectedImage);
+//                camera_image_vanilla.setImageBitmap(bitmap);
+//                camera_image_demotivational.setImageBitmap(bitmap);
+//            } catch (Exception e) {
+//                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
 }

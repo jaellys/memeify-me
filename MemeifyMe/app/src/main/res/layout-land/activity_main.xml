@@ -24,7 +24,7 @@
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="@string/btn_photo"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/tv_title"
         android:layout_alignLeft="@+id/btn_album"
         android:layout_alignStart="@+id/btn_album" />
 
