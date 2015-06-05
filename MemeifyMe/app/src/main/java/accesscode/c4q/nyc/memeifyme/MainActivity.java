@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btn_camera;
     private Button btn_album;
     private Button btn_template;
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(camera);
                 break;
             case R.id.btn_album:
+                Intent album = new Intent(this, Gallery.class);
+                startActivity(album);
                 break;
             case R.id.btn_template:
                 break;
