@@ -151,11 +151,6 @@ public class Gallery extends ActionBarActivity {
                 camera_image_vanilla.setImageBitmap(photo);
                 camera_image_demotivational.setImageBitmap(photo);
 
-                btn_share.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        setContentView(R.layout.activity_camera);
-
             } catch (Exception e) {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
