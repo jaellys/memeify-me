@@ -163,7 +163,7 @@ public class Gallery extends ActionBarActivity {
                         sm.saveMeme(bitmap, "meme", getContentResolver());
 
                         String pathBm = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "meme", null);
-//                        Uri bmUri = Uri.parse(pathBm);
+                        Uri bmUri = Uri.parse(pathBm);
 
                         Intent attachIntent = new Intent(Intent.ACTION_SEND);
                         attachIntent.putExtra(Intent.EXTRA_STREAM, selectedImage);
@@ -177,21 +177,5 @@ public class Gallery extends ActionBarActivity {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    public Bitmap captureBitmapFromView(FrameLayout view) {
-        // Create empty bitmap, pass bitmap to Canvas obj, pass to view.draw, return
-
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-
-        Drawable bgDrawable = view.getBackground();
-        if (bgDrawable != null)
-            bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
-
-        view.draw(canvas); // Render this view and children to Canvas
-        return returnedBitmap;
     }
 }
