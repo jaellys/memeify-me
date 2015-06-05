@@ -113,12 +113,11 @@ public class Gallery extends ActionBarActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.activity_camera);
                 FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
                 SaveMeme sm = new SaveMeme();
                 Bitmap bitmap = sm.loadBitmapFromView(meme);
                 sm.saveMeme(bitmap, "meme", getContentResolver());
-                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, mediaMountUri)); // Dison is fixing this.
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory()))); // Dison is fixing this.
                 Toast.makeText(getApplicationContext(), "Meme saved!", Toast.LENGTH_LONG).show();
             }
         });
@@ -126,9 +125,6 @@ public class Gallery extends ActionBarActivity {
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.activity_camera);
-
-                // FIXME: Bitmap continues to be null here.
                 FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
                 SaveMeme sm = new SaveMeme();
                 Bitmap bitmap = sm.loadBitmapFromView(meme);
@@ -148,33 +144,38 @@ public class Gallery extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK) {
             try {
-                Uri selectedImage = data.getData();
+                final Uri selectedImage = data.getData();
                 getContentResolver().notifyChange(selectedImage, null);
                 ContentResolver cr = getContentResolver();
                 photo = MediaStore.Images.Media.getBitmap(cr, selectedImage);
                 camera_image_vanilla.setImageBitmap(photo);
                 camera_image_demotivational.setImageBitmap(photo);
 
+                btn_share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setContentView(R.layout.activity_camera);
+
+                        // FIXME: Bitmap continues to be null here.
+                        FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
+                        SaveMeme sm = new SaveMeme();
+                        Bitmap bitmap = sm.loadBitmapFromView(meme);
+                        sm.saveMeme(bitmap, "meme", getContentResolver());
+
+                        String pathBm = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "meme", null);
+                        Uri bmUri = Uri.parse(pathBm);
+
+                        Intent attachIntent = new Intent(Intent.ACTION_SEND);
+                        attachIntent.putExtra(Intent.EXTRA_STREAM, selectedImage);
+                        attachIntent.setType("image/png");
+                        startActivity(attachIntent);
+                    }
+                });
+
 
             } catch (Exception e) {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    public Bitmap captureBitmapFromView(FrameLayout view) {
-        // Create empty bitmap, pass bitmap to Canvas obj, pass to view.draw, return
-
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-
-        Drawable bgDrawable = view.getBackground();
-        if (bgDrawable != null)
-            bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
-
-        view.draw(canvas); // Render this view and children to Canvas
-        return returnedBitmap;
     }
 }
