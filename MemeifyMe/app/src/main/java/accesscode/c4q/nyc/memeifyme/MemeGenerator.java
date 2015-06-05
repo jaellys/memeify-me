@@ -1,7 +1,9 @@
 package accesscode.c4q.nyc.memeifyme;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,10 +15,11 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
-public class Camera extends ActionBarActivity {
+public class MemeGenerator extends ActionBarActivity {
 
     private ViewSwitcher switcher;
     private ImageView camera_image_vanilla, camera_image_demotivational;
@@ -25,7 +28,8 @@ public class Camera extends ActionBarActivity {
     private Button save, send;
     private ToggleButton toggle;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private Bitmap photo;
+    private static final int RESULT_LOAD_IMG = 1;
+    Bitmap photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +49,14 @@ public class Camera extends ActionBarActivity {
         send = (Button) findViewById(R.id.send);
         toggle = (ToggleButton) findViewById(R.id.toggle);
 
-        Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(openCamera, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+//        Added to Camera
+//        Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(openCamera, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
+//        Added to Gallery
+//        Intent openGallery = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        openGallery.setType("image/*");
+//        startActivityForResult(openGallery, RESULT_LOAD_IMG);
 
         //Used ViewSwitcher to toggle between vanilla and demotivational meme views
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -111,11 +121,25 @@ public class Camera extends ActionBarActivity {
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
-            camera_image_vanilla.setImageBitmap(photo);
-            camera_image_demotivational.setImageBitmap(photo);
-        }
-    }
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+//            photo = (Bitmap) data.getExtras().get("data");
+//            camera_image_vanilla.setImageBitmap(photo);
+//            camera_image_demotivational.setImageBitmap(photo);
+//        }
+//
+//        if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK) {
+//            Bitmap bitmap;
+//            try {
+//                Uri selectedImage = data.getData();
+//                getContentResolver().notifyChange(selectedImage, null);
+//                ContentResolver cr = getContentResolver();
+//                bitmap = MediaStore.Images.Media.getBitmap(cr, selectedImage);
+//                camera_image_vanilla.setImageBitmap(bitmap);
+//                camera_image_demotivational.setImageBitmap(bitmap);
+//            } catch (Exception e) {
+//                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
 }
