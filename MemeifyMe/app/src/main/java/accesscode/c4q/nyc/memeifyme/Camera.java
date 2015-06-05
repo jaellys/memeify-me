@@ -2,6 +2,8 @@ package accesscode.c4q.nyc.memeifyme;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,8 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
@@ -99,14 +103,30 @@ public class Camera extends ActionBarActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo Dison's image btn_save
+                FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
+                SaveMeme sm = new SaveMeme();
+                Bitmap bitmap = sm.loadBitmapFromView(meme);
+                sm.saveMeme(bitmap, "meme", getContentResolver());
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory()))); // Dison is fixing this.
+                Toast.makeText(getApplicationContext(), "Meme saved!", Toast.LENGTH_LONG).show();
             }
         });
 
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo Jae's image btn_share
+                FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
+                SaveMeme sm = new SaveMeme();
+                Bitmap bitmap = sm.loadBitmapFromView(meme);
+                sm.saveMeme(bitmap, "meme", getContentResolver());
+
+                String pathBm = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "meme", null);
+                Uri bmUri = Uri.parse(pathBm);
+
+                Intent attachIntent = new Intent(Intent.ACTION_SEND);
+                attachIntent.putExtra(Intent.EXTRA_STREAM, bmUri);
+                attachIntent.setType("image/png");
+                startActivity(attachIntent);
             }
         });
     }
