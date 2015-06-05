@@ -4,17 +4,25 @@ import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class SaveMeme {
-    Bitmap bm;
-    public void saveMeme(ImageView imageView, String imgName, ContentResolver c) {
-        imageView.buildDrawingCache();
-        Bitmap bm = imageView.getDrawingCache();
+    public Bitmap loadBitmapFromView(FrameLayout view) {
+
+        view.setDrawingCacheEnabled(true);
+
+        view.buildDrawingCache();
+
+        Bitmap bm = view.getDrawingCache();
+
+        return bm;
+    }
+
+    public void saveMeme(Bitmap bm, String imgName, ContentResolver c) {
 
         OutputStream fOut = null;
         String strDirectory = Environment.getExternalStorageDirectory().toString();
