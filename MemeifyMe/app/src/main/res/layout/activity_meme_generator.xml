@@ -9,28 +9,51 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="accesscode.c4q.nyc.memeifyme.MemeGenerator">
 
-    <FrameLayout
-        android:id="@+id/preview"
+    <ViewSwitcher
+        android:id="@+id/switcher"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/camera_image_vanilla"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/caption_top_vanilla"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top" />
+
+            <TextView
+                android:id="@+id/caption_bottom_vanilla"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom" />
+
+        </FrameLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#000000"
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/camera_image"
+                android:id="@+id/camera_image_demotivational"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3.5"
-                android:paddingTop="10dp"
-                android:rotation="90"/>
+                android:paddingTop="10dp" />
 
             <TextView
-                android:id="@+id/caption_top"
+                android:id="@+id/caption_top_demotivational"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight=".75"
@@ -40,7 +63,7 @@
                 android:textSize="25sp" />
 
             <TextView
-                android:id="@+id/caption_bottom"
+                android:id="@+id/caption_bottom_demotivational"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight=".75"
@@ -49,7 +72,7 @@
 
         </LinearLayout>
 
-    </FrameLayout>
+    </ViewSwitcher>
 
     <EditText
         android:id="@+id/editor_top"
@@ -84,25 +107,12 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/vanilla"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="vanilla" />
-
-        <Button
-            android:id="@+id/demotivational"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="demotivational" />
-
-    </LinearLayout>
+    <ToggleButton
+        android:id="@+id/toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textOff="Vanilla"
+        android:textOn="Demotivational" />
 
 </LinearLayout>

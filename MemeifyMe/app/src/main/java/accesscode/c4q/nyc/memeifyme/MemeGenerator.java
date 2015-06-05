@@ -1,43 +1,73 @@
 package accesscode.c4q.nyc.memeifyme;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+import android.widget.ViewSwitcher;
 
 public class MemeGenerator extends ActionBarActivity {
 
-    private ImageView camera_image;
-    private TextView caption_top, caption_bottom;
+    private ViewSwitcher switcher;
+    private ImageView camera_image_vanilla, camera_image_demotivational;
+    private TextView caption_top_vanilla, caption_top_demotivational, caption_bottom_vanilla, caption_bottom_demotivational;
     private EditText editor_top, editor_bottom;
-    private Button save, send, vanilla, demotivational;
+    private Button save, send;
+    private ToggleButton toggle;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int RESULT_LOAD_IMG = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meme_generator);
 
-        camera_image = (ImageView) findViewById(R.id.camera_image);
-        caption_top = (TextView) findViewById(R.id.caption_top);
-        caption_bottom = (TextView) findViewById(R.id.caption_bottom);
+        switcher = (ViewSwitcher) findViewById(R.id.switcher);
+        camera_image_vanilla = (ImageView) findViewById(R.id.camera_image_vanilla);
+        camera_image_demotivational = (ImageView) findViewById(R.id.camera_image_demotivational);
+        caption_top_vanilla = (TextView) findViewById(R.id.caption_top_vanilla);
+        caption_top_demotivational = (TextView) findViewById(R.id.caption_top_demotivational);
+        caption_bottom_vanilla = (TextView) findViewById(R.id.caption_bottom_vanilla);
+        caption_bottom_demotivational = (TextView) findViewById(R.id.caption_bottom_demotivational);
         editor_top = (EditText) findViewById(R.id.editor_top);
         editor_bottom = (EditText) findViewById(R.id.editor_bottom);
         save = (Button) findViewById(R.id.save);
         send = (Button) findViewById(R.id.send);
-        vanilla = (Button) findViewById(R.id.vanilla);
-        demotivational = (Button) findViewById(R.id.demotivational);
+        toggle = (ToggleButton) findViewById(R.id.toggle);
 
-        Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(openCamera, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+//        Todo Uncomment either intents to test, will eventually have to be in their own activity
+//        Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(openCamera, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
+//        Intent openGallery = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        openGallery.setType("image/*");
+//        startActivityForResult(openGallery, RESULT_LOAD_IMG);
+
+        //Used ViewSwitcher to toggle between vanilla and demotivational meme views
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b)
+                    switcher.showNext();
+                else
+                    switcher.showPrevious();
+            }
+        });
+
+        //Automatically type what the user inputs into the TextViews, using onTextChanged method
         editor_top.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -46,7 +76,8 @@ public class MemeGenerator extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                caption_top.setText(editor_top.getText().toString());
+                caption_top_vanilla.setText(editor_top.getText().toString());
+                caption_top_demotivational.setText(editor_top.getText().toString());
             }
 
             @Override
@@ -63,7 +94,8 @@ public class MemeGenerator extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                caption_bottom.setText(editor_bottom.getText().toString());
+                caption_bottom_vanilla.setText(editor_bottom.getText().toString());
+                caption_bottom_demotivational.setText(editor_bottom.getText().toString());
             }
 
             @Override
@@ -71,13 +103,41 @@ public class MemeGenerator extends ActionBarActivity {
 
             }
         });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo Dison's image save
+            }
+        });
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo Jae's image send
+            }
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            camera_image.setImageBitmap(photo);
+            camera_image_vanilla.setImageBitmap(photo);
+            camera_image_demotivational.setImageBitmap(photo);
+        }
+
+        if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK) {
+            Bitmap bitmap;
+            try {
+                Uri selectedImage = data.getData();
+                getContentResolver().notifyChange(selectedImage, null);
+                ContentResolver cr = getContentResolver();
+                bitmap = MediaStore.Images.Media.getBitmap(cr, selectedImage);
+                camera_image_vanilla.setImageBitmap(bitmap);
+                camera_image_demotivational.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
         }
     }
-
 }
