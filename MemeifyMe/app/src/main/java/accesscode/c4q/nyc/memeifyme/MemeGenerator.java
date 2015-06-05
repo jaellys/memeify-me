@@ -29,6 +29,7 @@ public class MemeGenerator extends ActionBarActivity {
     private ToggleButton toggle;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int RESULT_LOAD_IMG = 1;
+    Bitmap photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +49,11 @@ public class MemeGenerator extends ActionBarActivity {
         send = (Button) findViewById(R.id.send);
         toggle = (ToggleButton) findViewById(R.id.toggle);
 
-//        Todo Uncomment either intents to test, will eventually have to be in their own activity
+//        Added to Camera
 //        Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //        startActivityForResult(openCamera, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
+//        Added to Gallery
 //        Intent openGallery = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //        openGallery.setType("image/*");
 //        startActivityForResult(openGallery, RESULT_LOAD_IMG);
@@ -121,7 +123,7 @@ public class MemeGenerator extends ActionBarActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            photo = (Bitmap) data.getExtras().get("data");
             camera_image_vanilla.setImageBitmap(photo);
             camera_image_demotivational.setImageBitmap(photo);
         }
