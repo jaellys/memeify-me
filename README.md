@@ -20,6 +20,9 @@ Access Code 2.1 @ [C4Q](http://www.c4q.nyc/)
 
 * **Sarah**: I made initial skeleten drafts of the camera and gallery intents. Then split the task of creating vanilla and demotivational memes with Allison. Afterwards, made a meme generator template to implement in the camera and gallery activities. I also made rough drafts of the layouts used in the project which were later updated by all. I've been working on the project almost every day, clocking at least 3+ hours per day, spent on researching, implementing, debugging.  
 
+* **Dison**: I did the initial main activity(menu page), saveMeme and LoadViewToBitMap class, and Template activity. Approximately 10 hours.
+
+* 
 ###To-Dos:
 * Fix auto-rotate of camera images captured in portrait.
 * Finalize layouts.
