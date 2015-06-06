@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(gallery);
                 break;
             case R.id.btn_template:
+                Intent template = new Intent(this, Template.class);
+                startActivity(template);
                 break;
             case R.id.btn_exit:
                 finish();

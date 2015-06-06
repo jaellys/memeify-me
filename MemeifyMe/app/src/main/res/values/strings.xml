@@ -12,4 +12,15 @@
     <string name="title_activity_share_meme">ShareMeme</string>
     <string name="title_activity_gallery">Meme from Gallery</string>
     <string name="title_activity_save_meme">Save Meme</string>
+    <string name="title_activity_activty_template">activty_template</string>
+    <string-array name="memeArray">
+        <item>Cool</item>
+        <item>Cry</item>
+        <item>Jacky Chan</item>
+        <item>Weird</item>
+        <item>Yao Ming</item>
+        <item>YUNO</item>
+    </string-array>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

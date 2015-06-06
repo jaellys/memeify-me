@@ -1,8 +1,8 @@
 package accesscode.c4q.nyc.memeifyme;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -10,33 +10,37 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
-public class Gallery extends ActionBarActivity {
 
+public class Template extends ActionBarActivity {
+    private Spinner drop;
     private ViewSwitcher switcher;
     private ImageView camera_image_vanilla, camera_image_demotivational;
     private TextView caption_top_vanilla, caption_top_demotivational, caption_bottom_vanilla, caption_bottom_demotivational;
     private EditText editor_top, editor_bottom;
     private Button btn_save, btn_share;
     private ToggleButton toggle;
-    private static final int RESULT_LOAD_IMG = 1;
-    private Bitmap photo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meme_generator);
-
+        setContentView(R.layout.activty_template);
+        drop =(Spinner)findViewById(R.id.sp);
         switcher = (ViewSwitcher) findViewById(R.id.switcher);
         camera_image_vanilla = (ImageView) findViewById(R.id.camera_image_vanilla);
         camera_image_demotivational = (ImageView) findViewById(R.id.camera_image_demotivational);
@@ -50,9 +54,49 @@ public class Gallery extends ActionBarActivity {
         btn_share = (Button) findViewById(R.id.btn_share);
         toggle = (ToggleButton) findViewById(R.id.toggle);
 
-        Intent openGallery = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        openGallery.setType("image/*");
-        startActivityForResult(openGallery, RESULT_LOAD_IMG);
+        ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this, R.array.memeArray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        drop.setAdapter(adapter);
+        drop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String str = adapterView.getItemAtPosition(i).toString().toLowerCase();
+                Drawable d;
+                switch (str){
+                    case "cool":
+                        d = getResources().getDrawable(R.drawable.cool);
+                        draw(d);
+                        break;
+                    case "cry":
+                        d = getResources().getDrawable(R.drawable.cry);
+                        draw(d);
+                        break;
+                    case "jacky chan":
+                        d = getResources().getDrawable(R.drawable.jackychan);
+                        draw(d);
+                        break;
+                    case "weird":
+                        d = getResources().getDrawable(R.drawable.weird);
+                        draw(d);
+                        break;
+                    case "yao ming":
+                        d = getResources().getDrawable(R.drawable.yaoming);
+                        draw(d);
+
+                        break;
+                    case "yuno":
+                        d = getResources().getDrawable(R.drawable.yuno);
+                        draw(d);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         //Used ViewSwitcher to toggle between vanilla and demotivational meme views
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -132,20 +176,9 @@ public class Gallery extends ActionBarActivity {
             }
         });
     }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK) {
-            try {
-                final Uri selectedImage = data.getData();
-                getContentResolver().notifyChange(selectedImage, null);
-                ContentResolver cr = getContentResolver();
-                photo = MediaStore.Images.Media.getBitmap(cr, selectedImage);
-                camera_image_vanilla.setImageBitmap(photo);
-                camera_image_demotivational.setImageBitmap(photo);
-
-            } catch (Exception e) {
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
-            }
-        }
+    public void draw(Drawable d){
+        camera_image_vanilla.setImageDrawable(d);
+        camera_image_demotivational.setImageDrawable(d);
     }
+
 }
