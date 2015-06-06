@@ -28,13 +28,19 @@
                 android:id="@+id/caption_top_vanilla"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|top" />
+                android:layout_gravity="center|top"
+                android:layout_marginTop="24dp"
+                android:textAllCaps="true"
+                android:textSize="32dp" />
 
             <TextView
                 android:id="@+id/caption_bottom_vanilla"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom" />
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="24dp"
+                android:textAllCaps="true"
+                android:textSize="32dp"/>
 
         </FrameLayout>
 

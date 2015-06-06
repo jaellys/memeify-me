@@ -13,12 +13,14 @@
         android:id="@+id/switcher"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:background="#00000000">
 
         <FrameLayout
             android:id="@+id/meme"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#00000000">
 
             <ImageView
                 android:id="@+id/camera_image_vanilla"
@@ -29,13 +31,21 @@
                 android:id="@+id/caption_top_vanilla"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|top" />
+                android:layout_gravity="center|top"
+                android:layout_marginTop="24dp"
+                android:text="Tap to edit"
+                android:textAllCaps="true"
+                android:textSize="32dp"/>
 
             <TextView
                 android:id="@+id/caption_bottom_vanilla"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom" />
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="24dp"
+                android:text="Tap to edit"
+                android:textAllCaps="true"
+                android:textSize="32dp"/>
 
         </FrameLayout>
 
@@ -60,8 +70,9 @@
                 android:layout_weight=".75"
                 android:gravity="center"
                 android:singleLine="true"
+                android:textAllCaps="true"
                 android:textColor="#ffffff"
-                android:textSize="25sp" />
+                android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/caption_bottom_demotivational"
@@ -69,7 +80,8 @@
                 android:layout_height="0dp"
                 android:layout_weight=".75"
                 android:gravity="top|center"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="24sp"/>
 
         </LinearLayout>
 

@@ -3,9 +3,7 @@ package accesscode.c4q.nyc.memeifyme;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,11 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
 public class Gallery extends ActionBarActivity {
 
@@ -82,7 +75,12 @@ public class Gallery extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Typeface impact = Typeface.createFromAsset(getAssets(), "Impact.ttf");
+                caption_top_vanilla.setTypeface(impact);
                 caption_top_vanilla.setText(editor_top.getText().toString());
+
+                Typeface times = Typeface.createFromAsset(getAssets(), "TimesNewRoman.ttf");
+                caption_top_demotivational.setTypeface(times);
                 caption_top_demotivational.setText(editor_top.getText().toString());
             }
 
@@ -100,7 +98,12 @@ public class Gallery extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Typeface impact = Typeface.createFromAsset(getAssets(), "Impact.ttf");
+                caption_bottom_vanilla.setTypeface(impact);
                 caption_bottom_vanilla.setText(editor_bottom.getText().toString());
+
+                Typeface times = Typeface.createFromAsset(getAssets(), "TimesNewRoman.ttf");
+                caption_bottom_demotivational.setTypeface(times);
                 caption_bottom_demotivational.setText(editor_bottom.getText().toString());
             }
 
@@ -150,28 +153,6 @@ public class Gallery extends ActionBarActivity {
                 photo = MediaStore.Images.Media.getBitmap(cr, selectedImage);
                 camera_image_vanilla.setImageBitmap(photo);
                 camera_image_demotivational.setImageBitmap(photo);
-
-                btn_share.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        setContentView(R.layout.activity_camera);
-
-                        // FIXME: Bitmap continues to be null here.
-                        FrameLayout meme = (FrameLayout) findViewById(R.id.meme);
-                        SaveMeme sm = new SaveMeme();
-                        Bitmap bitmap = sm.loadBitmapFromView(meme);
-                        sm.saveMeme(bitmap, "meme", getContentResolver());
-
-                        String pathBm = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "meme", null);
-                        Uri bmUri = Uri.parse(pathBm);
-
-                        Intent attachIntent = new Intent(Intent.ACTION_SEND);
-                        attachIntent.putExtra(Intent.EXTRA_STREAM, selectedImage);
-                        attachIntent.setType("image/png");
-                        startActivity(attachIntent);
-                    }
-                });
-
 
             } catch (Exception e) {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();

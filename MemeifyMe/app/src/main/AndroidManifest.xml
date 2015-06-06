@@ -32,16 +32,10 @@
         <activity
             android:name=".Gallery"
             android:label="@string/title_activity_gallery" />
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="accesscode.c4q.nyc.memeifyme.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths" />
-        </provider>
+        <activity
+            android:name=".Template"
+            android:label="@string/title_activity_template" >
+        </activity>
     </application>
 
 </manifest>

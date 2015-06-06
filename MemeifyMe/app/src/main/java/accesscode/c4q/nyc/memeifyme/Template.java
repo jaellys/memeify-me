@@ -2,7 +2,7 @@ package accesscode.c4q.nyc.memeifyme;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -11,32 +11,35 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
-public class Camera extends ActionBarActivity {
 
+public class Template extends ActionBarActivity {
+    private Spinner drop;
     private ViewSwitcher switcher;
     private ImageView camera_image_vanilla, camera_image_demotivational;
     private TextView caption_top_vanilla, caption_top_demotivational, caption_bottom_vanilla, caption_bottom_demotivational;
     private EditText editor_top, editor_bottom;
     private Button btn_save, btn_share;
     private ToggleButton toggle;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private Bitmap photo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meme_generator);
-
+        setContentView(R.layout.activity_template);
+        drop = (Spinner) findViewById(R.id.sp);
         switcher = (ViewSwitcher) findViewById(R.id.switcher);
         camera_image_vanilla = (ImageView) findViewById(R.id.camera_image_vanilla);
         camera_image_demotivational = (ImageView) findViewById(R.id.camera_image_demotivational);
@@ -50,8 +53,49 @@ public class Camera extends ActionBarActivity {
         btn_share = (Button) findViewById(R.id.btn_share);
         toggle = (ToggleButton) findViewById(R.id.toggle);
 
-        Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(openCamera, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.memeArray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        drop.setAdapter(adapter);
+        drop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String str = adapterView.getItemAtPosition(i).toString().toLowerCase();
+                Drawable d;
+                switch (str) {
+                    case "cool":
+                        d = getResources().getDrawable(R.drawable.cool);
+                        draw(d);
+                        break;
+                    case "cry":
+                        d = getResources().getDrawable(R.drawable.cry);
+                        draw(d);
+                        break;
+                    case "jacky chan":
+                        d = getResources().getDrawable(R.drawable.jackychan);
+                        draw(d);
+                        break;
+                    case "weird":
+                        d = getResources().getDrawable(R.drawable.weird);
+                        draw(d);
+                        break;
+                    case "yao ming":
+                        d = getResources().getDrawable(R.drawable.yaoming);
+                        draw(d);
+
+                        break;
+                    case "yuno":
+                        d = getResources().getDrawable(R.drawable.yuno);
+                        draw(d);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         //Used ViewSwitcher to toggle between vanilla and demotivational meme views
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -73,12 +117,7 @@ public class Camera extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Typeface impact = Typeface.createFromAsset(getAssets(), "Impact.ttf");
-                caption_top_vanilla.setTypeface(impact);
                 caption_top_vanilla.setText(editor_top.getText().toString());
-
-                Typeface times = Typeface.createFromAsset(getAssets(), "TimesNewRoman.ttf");
-                caption_top_demotivational.setTypeface(times);
                 caption_top_demotivational.setText(editor_top.getText().toString());
             }
 
@@ -96,12 +135,7 @@ public class Camera extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Typeface impact = Typeface.createFromAsset(getAssets(), "Impact.ttf");
-                caption_bottom_vanilla.setTypeface(impact);
                 caption_bottom_vanilla.setText(editor_bottom.getText().toString());
-
-                Typeface times = Typeface.createFromAsset(getAssets(), "TimesNewRoman.ttf");
-                caption_bottom_demotivational.setTypeface(times);
                 caption_bottom_demotivational.setText(editor_bottom.getText().toString());
             }
 
@@ -142,11 +176,9 @@ public class Camera extends ActionBarActivity {
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
-            camera_image_vanilla.setImageBitmap(photo);
-            camera_image_demotivational.setImageBitmap(photo);
-        }
+    public void draw(Drawable d) {
+        camera_image_vanilla.setImageDrawable(d);
+        camera_image_demotivational.setImageDrawable(d);
     }
+
 }
