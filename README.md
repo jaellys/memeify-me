@@ -11,10 +11,8 @@ Access Code 2.1 @ [C4Q](http://www.c4q.nyc/)
 * Create demotivational posters (for the cynic in us all)!
 * Save your hilarious and surely original meme to camera roll!
 * Share your meme via email, social media, etc.!
+* For more, see project requirements: https://github.com/accesscode-2-1/unit-2/blob/master/homework/week-0.md
 
-###Prompt:
-Meme-ify Me
-
-https://github.com/accesscode-2-1/unit-2/blob/master/homework/week-0.md
-
+###Breakdown:
+* **Jae**: I took on an unofficial team lead role, coordinating with members, integrating their code within the project, managing our repo, etc. Lots of code surgery, testing, debugging. I coded the share functionality, general styling, and made layout edits. As far as time spent, I'd estimate 15 hours and counting (I did a lot of doc reading and debugging!). Will be adding other contributions for Sunday's demo.
 
