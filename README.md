@@ -18,6 +18,8 @@ Access Code 2.1 @ [C4Q](http://www.c4q.nyc/)
 
 * **Allison**: I created the camera.java and gallery.java files, working on them Sunday during class and also getting some assistance during office hours. I also was able to make myself available all day Thursday and most of Friday to help with debugging and adding on last-minute additions as we pulled the project together. I'd estimate I spent 30 hours on the project, between researching/learning, coding itself, getting better at git push/pull/merge, and testing/debugging.
 
+* **Sarah**: I made initial skeleten drafts of the camera and gallery intents. Then split the task of creating vanilla and demotivational memes with Allison. Afterwards, made a meme generator template to implement in the camera and gallery activities. I also made rough drafts of the layouts used in the project which were later updated by all. I've been working on the project almost every day, clocking at least 3+ hours, spent on researching, implementing, debugging.  
+
 ###To-Dos:
 * Fix auto-rotate of camera images captured in portrait.
 * Finalize layouts.
