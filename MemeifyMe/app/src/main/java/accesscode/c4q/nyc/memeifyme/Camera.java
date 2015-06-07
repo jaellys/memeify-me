@@ -64,21 +64,21 @@ public class Camera extends ActionBarActivity {
         caption_bottom_vanilla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myTextDialog(caption_top_vanilla).show();
+                myTextDialog(caption_bottom_vanilla).show();
             }
         });
 
         caption_top_demotivational.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myTextDialog(caption_top_vanilla).show();
+                myTextDialog(caption_top_demotivational).show();
             }
         });
 
         caption_bottom_demotivational.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myTextDialog(caption_top_vanilla).show();
+                myTextDialog(caption_bottom_demotivational).show();
             }
         });
 
