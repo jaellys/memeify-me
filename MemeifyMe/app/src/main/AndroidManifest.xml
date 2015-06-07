@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="accesscode.c4q.nyc.memeifyme" >
 
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -13,7 +14,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -23,27 +26,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Camera"
             android:label="@string/title_activity_camera" />
         <activity
             android:name=".Gallery"
             android:label="@string/title_activity_gallery" />
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="accesscode.c4q.nyc.memeifyme.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true" >
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths" />
-        </provider>
-
         <activity
             android:name=".Template"
-            android:label="@string/title_activity_activty_template" >
-        </activity>
+            android:label="@string/title_activity_template" />
+        <activity
+            android:name=".Doge"
+            android:label="@string/title_activity_doge" />
     </application>
 
 </manifest>
