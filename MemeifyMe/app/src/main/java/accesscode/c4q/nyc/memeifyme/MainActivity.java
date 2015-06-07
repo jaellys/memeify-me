@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_camera;
     private Button btn_album;
     private Button btn_template;
+    private Button btn_doge;
     private Button btn_exit;
 
     @Override
@@ -18,15 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_camera = (Button) findViewById(R.id.btn_camera);
-        btn_album = (Button) findViewById(R.id.btn_album);
-        btn_template = (Button) findViewById(R.id.btn_template);
-        btn_exit = (Button) findViewById(R.id.btn_exit);
-
-        btn_camera.setOnClickListener(this);
-        btn_album.setOnClickListener(this);
-        btn_template.setOnClickListener(this);
-        btn_exit.setOnClickListener(this);
+        initializeViews();
     }
 
     @Override
@@ -44,10 +37,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent template = new Intent(this, Template.class);
                 startActivity(template);
                 break;
+            case R.id.btn_doge:
+                Intent doge = new Intent(this, Doge.class);
+                startActivity(doge);
+                break;
             case R.id.btn_exit:
                 finish();
                 System.exit(0);
                 break;
         }
+    }
+
+    private void initializeViews() {
+        btn_camera = (Button) findViewById(R.id.btn_camera);
+        btn_album = (Button) findViewById(R.id.btn_album);
+        btn_template = (Button) findViewById(R.id.btn_template);
+        btn_doge = (Button) findViewById(R.id.btn_doge);
+        btn_exit = (Button) findViewById(R.id.btn_exit);
+
+        btn_camera.setOnClickListener(this);
+        btn_album.setOnClickListener(this);
+        btn_template.setOnClickListener(this);
+        btn_doge.setOnClickListener(this);
+        btn_exit.setOnClickListener(this);
     }
 }

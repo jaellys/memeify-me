@@ -34,8 +34,10 @@
             android:label="@string/title_activity_gallery" />
         <activity
             android:name=".Template"
-            android:label="@string/title_activity_template" >
-        </activity>
+            android:label="@string/title_activity_template" />
+        <activity
+            android:name=".Doge"
+            android:label="@string/title_activity_doge" />
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@
     <string name="btn_main_photo">Meme from Photo</string>
     <string name="btn_main_gallery">Meme from Gallery</string>
     <string name="btn_main_template">Meme from Template</string>
+    <string name="btn_main_doge">Doge</string>
     <string name="btn_main_exit">Exit</string>
     <string name="btn_save">Save</string>
     <string name="btn_share">Share</string>
@@ -13,6 +14,14 @@
     <string name="title_activity_gallery">Meme from Gallery</string>
     <string name="title_activity_save_meme">Save Meme</string>
     <string name="title_activity_template">Meme from Template</string>
+    <string name="title_activity_doge">Doge!</string>
+
+
+    <string name="dialog_message">Enter text:</string>
+    <string name="dialog_title">Edit Caption</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="tap_to_edit">Tap to edit</string>
 
     <string-array name="memeArray">
         <item>Cool</item>

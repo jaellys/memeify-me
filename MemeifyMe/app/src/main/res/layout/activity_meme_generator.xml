@@ -13,7 +13,7 @@
         android:id="@+id/switcher"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:background="#00000000">
 
         <FrameLayout
@@ -25,17 +25,19 @@
             <ImageView
                 android:id="@+id/camera_image_vanilla"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
 
+            <!-- How to add a stroke here? -->
             <TextView
                 android:id="@+id/caption_top_vanilla"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="24dp"
-                android:text="Tap to edit"
+                android:text="@string/tap_to_edit"
                 android:textAllCaps="true"
-                android:textSize="32dp"/>
+                android:textSize="40dp"/>
 
             <TextView
                 android:id="@+id/caption_bottom_vanilla"
@@ -43,12 +45,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|bottom"
                 android:layout_marginBottom="24dp"
-                android:text="Tap to edit"
+                android:text="@string/tap_to_edit"
                 android:textAllCaps="true"
-                android:textSize="32dp"/>
+                android:textSize="40dp"/>
 
         </FrameLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,41 +71,39 @@
                 android:layout_weight=".75"
                 android:gravity="center"
                 android:singleLine="true"
+                android:text="@string/tap_to_edit"
                 android:textAllCaps="true"
                 android:textColor="#ffffff"
-                android:textSize="32sp" />
+                android:textSize="40sp" />
 
             <TextView
                 android:id="@+id/caption_bottom_demotivational"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight=".75"
+                android:text="@string/tap_to_edit"
                 android:gravity="top|center"
                 android:textColor="#ffffff"
-                android:textSize="24sp"/>
+                android:textSize="32sp"/>
 
         </LinearLayout>
 
     </ViewSwitcher>
 
-    <EditText
-        android:id="@+id/editor_top"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5" />
-
-    <EditText
-        android:id="@+id/editor_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textOff="Vanilla"
+            android:textOn="Demotivational" />
 
         <Button
             android:id="@+id/btn_save"
@@ -120,12 +119,6 @@
 
     </LinearLayout>
 
-    <ToggleButton
-        android:id="@+id/toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textOff="Vanilla"
-        android:textOn="Demotivational" />
+
 
 </LinearLayout>
