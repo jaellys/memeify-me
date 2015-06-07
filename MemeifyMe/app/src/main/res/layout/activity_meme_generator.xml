@@ -37,7 +37,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/tap_to_edit"
                 android:textAllCaps="true"
-                android:textSize="40dp"/>
+                android:textSize="40dp" />
 
             <TextView
                 android:id="@+id/caption_bottom_vanilla"
@@ -47,7 +47,7 @@
                 android:layout_marginBottom="24dp"
                 android:text="@string/tap_to_edit"
                 android:textAllCaps="true"
-                android:textSize="40dp"/>
+                android:textSize="40dp" />
 
         </FrameLayout>
 
@@ -81,10 +81,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight=".75"
-                android:text="@string/tap_to_edit"
                 android:gravity="top|center"
+                android:text="@string/tap_to_edit"
                 android:textColor="#ffffff"
-                android:textSize="32sp"/>
+                android:textSize="32sp" />
 
         </LinearLayout>
 
@@ -118,7 +118,6 @@
             android:text="@string/btn_share" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

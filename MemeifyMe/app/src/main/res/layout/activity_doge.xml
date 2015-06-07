@@ -69,8 +69,7 @@
             android:id="@+id/doge"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/shibe" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_doge_5"
@@ -95,7 +94,7 @@
             android:layout_height="48dp"
             android:text="very"
             android:textColor="#00FFFF"
-            android:textSize="18dp" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/tv_doge_2"
@@ -103,7 +102,7 @@
             android:layout_height="48dp"
             android:text="such"
             android:textColor="#00FF08"
-            android:textSize="30dp" />
+            android:textSize="34dp" />
 
         <TextView
             android:id="@+id/tv_doge_1"

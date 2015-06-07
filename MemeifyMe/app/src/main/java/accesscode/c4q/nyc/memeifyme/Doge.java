@@ -1,5 +1,6 @@
 package accesscode.c4q.nyc.memeifyme;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -16,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by jaellysbales on 6/6/15.
@@ -26,10 +29,13 @@ public class Doge extends ActionBarActivity implements View.OnTouchListener {
 
     private Button btn_share;
     private EditText et_doge_1, et_doge_2, et_doge_3, et_doge_4, et_doge_5;
+    private ImageView doge;
     private TextView tv_doge_1, tv_doge_2, tv_doge_3, tv_doge_4, tv_doge_5;
     private ViewGroup rootLayout;
     private int delta_x;
     private int delta_y;
+    private static final int RESULT_LOAD_IMG = 1;
+    private Bitmap photo;
 
     // TODO: Allow option for text sizes and color picker.
     // TODO: How to distinguish click from touch?
@@ -39,6 +45,10 @@ public class Doge extends ActionBarActivity implements View.OnTouchListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doge);
         rootLayout = (ViewGroup) findViewById(R.id.root);
+
+        Intent openGallery = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        openGallery.setType("image/*");
+        startActivityForResult(openGallery, RESULT_LOAD_IMG);
 
         initializeViews();
 
@@ -98,6 +108,7 @@ public class Doge extends ActionBarActivity implements View.OnTouchListener {
 
     private void initializeViews() {
         btn_share = (Button) rootLayout.findViewById(R.id.btn_share);
+        doge = (ImageView) rootLayout.findViewById(R.id.doge);
         et_doge_1 = (EditText) rootLayout.findViewById(R.id.et_doge_1);
         et_doge_2 = (EditText) rootLayout.findViewById(R.id.et_doge_2);
         et_doge_3 = (EditText) rootLayout.findViewById(R.id.et_doge_3);
@@ -163,6 +174,21 @@ public class Doge extends ActionBarActivity implements View.OnTouchListener {
         tv_doge_3.setTypeface(comic_sans);
         tv_doge_4.setTypeface(comic_sans);
         tv_doge_5.setTypeface(comic_sans);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK) {
+            try {
+                final Uri selectedImage = data.getData();
+                getContentResolver().notifyChange(selectedImage, null);
+                ContentResolver cr = getContentResolver();
+                photo = MediaStore.Images.Media.getBitmap(cr, selectedImage);
+                doge.setImageBitmap(photo);
+
+            } catch (Exception e) {
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void setTextListeners() {
