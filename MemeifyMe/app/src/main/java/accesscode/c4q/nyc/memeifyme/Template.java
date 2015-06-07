@@ -60,24 +60,36 @@ public class Template extends ActionBarActivity {
                         d = getResources().getDrawable(R.drawable.cool);
                         draw(d);
                         break;
-                    case "cry":
-                        d = getResources().getDrawable(R.drawable.cry);
-                        draw(d);
-                        break;
-                    case "jacky chan":
-                        d = getResources().getDrawable(R.drawable.jackychan);
-                        draw(d);
-                        break;
-                    case "weird":
-                        d = getResources().getDrawable(R.drawable.weird);
-                        draw(d);
-                        break;
                     case "yao ming":
                         d = getResources().getDrawable(R.drawable.yaoming);
                         draw(d);
                         break;
-                    case "yuno":
-                        d = getResources().getDrawable(R.drawable.yuno);
+                    case "evil plotting raccoon":
+                        d = getResources().getDrawable(R.drawable.evilplottingraccoon);
+                        draw(d);
+                        break;
+                    case "philosoraptor":
+                        d = getResources().getDrawable(R.drawable.philosoraptor);
+                        draw(d);
+                        break;
+                    case "socially awkward penguin":
+                        d = getResources().getDrawable(R.drawable.sociallyawkwardpenguin);
+                        draw(d);
+                        break;
+                    case "success kid":
+                        d = getResources().getDrawable(R.drawable.successkid);
+                        draw(d);
+                        break;
+                    case "scumbag steve":
+                        d = getResources().getDrawable(R.drawable.scumbagsteve);
+                        draw(d);
+                        break;
+                    case "one does not simply":
+                        d = getResources().getDrawable(R.drawable.onedoesnotsimply);
+                        draw(d);
+                        break;
+                    case "i don't always":
+                        d = getResources().getDrawable(R.drawable.idontalways);
                         draw(d);
                         break;
                 }

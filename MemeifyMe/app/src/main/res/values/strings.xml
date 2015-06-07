@@ -5,7 +5,7 @@
     <string name="btn_main_photo">Meme from Photo</string>
     <string name="btn_main_gallery">Meme from Gallery</string>
     <string name="btn_main_template">Meme from Template</string>
-    <string name="btn_main_doge">Doge</string>
+    <string name="btn_main_doge">Doge from Gallery</string>
     <string name="btn_main_exit">Exit</string>
     <string name="btn_save">Save</string>
     <string name="btn_share">Share</string>
@@ -14,7 +14,7 @@
     <string name="title_activity_gallery">Meme from Gallery</string>
     <string name="title_activity_save_meme">Save Meme</string>
     <string name="title_activity_template">Meme from Template</string>
-    <string name="title_activity_doge">Doge!</string>
+    <string name="title_activity_doge">Doge</string>
 
 
     <string name="dialog_message">Enter text:</string>
@@ -25,11 +25,14 @@
 
     <string-array name="memeArray">
         <item>Cool</item>
-        <item>Cry</item>
-        <item>Jacky Chan</item>
-        <item>Weird</item>
         <item>Yao Ming</item>
-        <item>YUNO</item>
+        <item>Evil Plotting Raccoon</item>
+        <item>Philosoraptor</item>
+        <item>Socially Awkward Penguin</item>
+        <item>Success Kid</item>
+        <item>Scumbag Steve</item>
+        <item>One Does Not Simply</item>
+        <item>I Don\'t Always</item>
 
     </string-array>
 </resources>
