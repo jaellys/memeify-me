@@ -5,6 +5,8 @@ AKA Sarah Kim, Allison Bojarski, Dison Ruan, and Jaellys Bales
 
 Access Code 2.1 @ [C4Q](http://www.c4q.nyc/)
 
+<img src="https://raw.githubusercontent.com/jaellysbales/memeify-me/master/MemeifyMe/app/src/main/res/drawable/lolcat.jpg" width="250">
+
 ###Features:
 * Take a photo (or provide your own) and...
 * Create vanilla memes (your classic image with Impact typeface)!
