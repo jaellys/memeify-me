@@ -2,14 +2,19 @@ package accesscode.c4q.nyc.memeifyme;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +25,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Created by jaellysbales on 6/6/15.
@@ -36,6 +51,7 @@ public class Doge extends ActionBarActivity implements View.OnTouchListener {
     private int delta_y;
     private static final int RESULT_LOAD_IMG = 1;
     private Bitmap photo;
+    private String mashape_key;
 
     // TODO: Allow option for text sizes and color picker.
     // TODO: How to distinguish click from touch?
@@ -49,6 +65,7 @@ public class Doge extends ActionBarActivity implements View.OnTouchListener {
         Intent openGallery = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         openGallery.setType("image/*");
         startActivityForResult(openGallery, RESULT_LOAD_IMG);
+        mashape_key = "";
 
         initializeViews();
 
@@ -185,10 +202,32 @@ public class Doge extends ActionBarActivity implements View.OnTouchListener {
                 photo = MediaStore.Images.Media.getBitmap(cr, selectedImage);
                 doge.setImageBitmap(photo);
 
+                String imagePath = getImagePath(selectedImage);
+                AsyncGoFetchToken goFetch = new AsyncGoFetchToken();
+                goFetch.execute(imagePath);
+
             } catch (Exception e) {
+                Log.d("exception: ", e.toString());
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public String getImagePath(Uri uri){
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":")+1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+
+        return path;
     }
 
     private void setTextListeners() {
@@ -273,5 +312,195 @@ public class Doge extends ActionBarActivity implements View.OnTouchListener {
 
             }
         });
+    }
+
+    /**
+     * Created by Ramona Harrison
+     * on 6/11/15.
+     */
+
+    public class AsyncGoFetchToken extends AsyncTask<String, Void, String> {
+
+        /**
+         * The system calls this to perform work in a worker thread and
+         * delivers it the parameters given to AsyncTask.execute()
+         */
+
+        protected String doInBackground(String... imageUris) {
+
+            try {
+                return requestImageDescription(imageUris[0]);
+            } catch (UnirestException e) {
+                e.printStackTrace();
+                return null;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+
+        private String requestImageDescription(String filepath) throws UnirestException, IOException {
+            // These code snippets use an open-source library. http://unirest.io/java
+            HttpResponse<InputStream> tokenResponse = Unirest.post("https://camfind.p.mashape.com/image_requests")
+                    .header("X-Mashape-Key", mashape_key)
+                    .field("image_request[image]", new File(filepath))
+                    .field("image_request[locale]", "en_US").asBinary();
+
+
+            String token = extractTokenFromJsonStream(tokenResponse.getBody());
+            return token;
+
+        }
+
+        /**
+         * The system calls this to perform work in the UI thread and delivers
+         * the result from doInBackground()
+         */
+        protected void onPostExecute(String token) {
+            startDelay(token);
+
+        }
+
+        public String extractTokenFromJsonStream(InputStream in) throws IOException {
+            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            try {
+                return readTokenMessage(reader);
+            } finally {
+                reader.close();
+            }
+
+        }
+
+        public String readTokenMessage(JsonReader reader) throws IOException {
+            String token = "";
+
+            reader.beginObject();
+            while (reader.hasNext()) {
+                String name = reader.nextName();
+                if (name.equals("token")) {
+                    token = reader.nextString();
+                } else {
+                    reader.skipValue();
+                }
+            }
+            reader.endObject();
+            return token;
+        }
+
+        private void startDelay(String token) {
+            final String theToken = token;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    AsyncGoFetchMessage goFetchMessage = new AsyncGoFetchMessage();
+                    goFetchMessage.execute(theToken);
+                }
+            }, 10000);
+        }
+
+    }
+
+    public class AsyncGoFetchMessage extends AsyncTask<String, Void, String> {
+
+        /**
+         * The system calls this to perform work in a worker thread and
+         * delivers it the parameters given to AsyncTask.execute()
+         */
+
+        protected String doInBackground(String... imageUris) {
+
+            try {
+                return requestImageDescription(imageUris[0]);
+            } catch (UnirestException e) {
+                e.printStackTrace();
+                return null;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+
+        private String requestImageDescription(String token) throws UnirestException, IOException {
+
+            String responseUrl = "https://camfind.p.mashape.com/image_responses/" + token;
+            // These code snippets use an open-source library. http://unirest.io/java
+            HttpResponse<InputStream> response = Unirest.get(responseUrl)
+                    .header("X-Mashape-Key", mashape_key)
+                    .header("Accept", "application/json")
+                    .asBinary();
+
+            String description = extractDescriptionFromJsonStream(response.getRawBody());
+            return description;
+
+        }
+
+        /**
+         * The system calls this to perform work in the UI thread and delivers
+         * the result from doInBackground()
+         */
+        protected void onPostExecute(String description) {
+
+            ArrayList<TextView> textViews = new ArrayList<>();
+            textViews.add(tv_doge_1);
+            textViews.add(tv_doge_2);
+            textViews.add(tv_doge_3);
+            textViews.add(tv_doge_4);
+            textViews.add(tv_doge_5);
+
+            String dogeTalk[] = {"such", "so", "many", "very", "wow"};
+            String words[] = description.split(" ");
+            int i;
+            for (i = 0; i < words.length && i < textViews.size(); i++) {
+                textViews.get(i).setText(dogeTalk[i] + " " + words[i]);
+            }
+            while (i < textViews.size()) {
+                textViews.get(i).setText(dogeTalk[i]);
+                i++;
+            }
+
+        }
+
+        public String extractDescriptionFromJsonStream(InputStream in) throws IOException {
+            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            try {
+                DescriptionMessage message = readDescriptionMessage(reader);
+                if (message.getStatus().equals("completed")) {
+                    return message.toString();
+                } else {
+                    Log.d("status", message.getStatus() + " " + message.getReason());
+                    return "mystery enigma puzzle tricky";
+                }
+
+            } finally {
+                reader.close();
+            }
+
+        }
+
+        public DescriptionMessage readDescriptionMessage(JsonReader reader) throws IOException {
+            String status = "";
+            String name = "";
+            String reason = "";
+
+            reader.beginObject();
+            while (reader.hasNext()) {
+                String field = reader.nextName();
+                if (field.equals("status")) {
+                    status = reader.nextString();
+                } else if (field.equals("name")) {
+                    name = reader.nextString();
+                } else if (field.equals("reason")) {
+                    reason = reader.nextString();
+                } else {
+                    reader.skipValue();
+                }
+            }
+
+            reader.endObject();
+            return new DescriptionMessage(status, name, reason);
+        }
     }
 }

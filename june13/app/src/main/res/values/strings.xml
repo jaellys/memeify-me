@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">june13</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="guess_text">Guess a number between 1 and 10:</string>
+</resources>
