@@ -69,7 +69,8 @@ public class Template extends ActionBarActivity {
                 new AsyncTask<Void, Void, byte[]>(){
                     @Override
                     protected byte[] doInBackground(Void[] params){
-                        updateData();
+                        if (loadData(str).length == 0)
+                            updateData();
                         return loadData(str);
                     }
 
