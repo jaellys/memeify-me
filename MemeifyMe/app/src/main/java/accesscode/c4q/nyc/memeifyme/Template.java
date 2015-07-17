@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,11 +23,18 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 
 public class Template extends ActionBarActivity {
@@ -53,46 +63,24 @@ public class Template extends ActionBarActivity {
         drop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String str = adapterView.getItemAtPosition(i).toString().toLowerCase();
+                final String str = adapterView.getItemAtPosition(i).toString().toLowerCase();
                 Drawable d;
-                switch (str) {
-                    case "cool":
-                        d = getResources().getDrawable(R.drawable.cool);
-                        draw(d);
-                        break;
-                    case "yao ming":
-                        d = getResources().getDrawable(R.drawable.yaoming);
-                        draw(d);
-                        break;
-                    case "evil plotting raccoon":
-                        d = getResources().getDrawable(R.drawable.evilplottingraccoon);
-                        draw(d);
-                        break;
-                    case "philosoraptor":
-                        d = getResources().getDrawable(R.drawable.philosoraptor);
-                        draw(d);
-                        break;
-                    case "socially awkward penguin":
-                        d = getResources().getDrawable(R.drawable.sociallyawkwardpenguin);
-                        draw(d);
-                        break;
-                    case "success kid":
-                        d = getResources().getDrawable(R.drawable.successkid);
-                        draw(d);
-                        break;
-                    case "scumbag steve":
-                        d = getResources().getDrawable(R.drawable.scumbagsteve);
-                        draw(d);
-                        break;
-                    case "one does not simply":
-                        d = getResources().getDrawable(R.drawable.onedoesnotsimply);
-                        draw(d);
-                        break;
-                    case "i don't always":
-                        d = getResources().getDrawable(R.drawable.idontalways);
-                        draw(d);
-                        break;
-                }
+
+                new AsyncTask<Void, Void, byte[]>(){
+                    @Override
+                    protected byte[] doInBackground(Void[] params){
+                        updateData();
+                        return loadData(str);
+                    }
+
+                    @Override
+                    protected void onPostExecute(byte[] image) {
+                        showData(image);
+                    }
+                }.execute();
+
+
+
 
             }
 
@@ -231,5 +219,20 @@ public class Template extends ActionBarActivity {
         });
         builder.setView(layout);
         return builder.create();
+    }
+
+    private void showData(byte[] image) {
+        Drawable d = new BitmapDrawable(BitmapFactory.decodeByteArray(image, 0, image.length));
+        draw(d);
+    }
+
+    private byte[] loadData(String image_name) {
+        SQLLiteOpenHelper mySQLiteOpenHelper = SQLLiteOpenHelper.getInstance(this);
+        return mySQLiteOpenHelper.loadData(image_name);
+    }
+
+    private void updateData() {
+        SQLLiteOpenHelper mySQLiteOpenHelper = SQLLiteOpenHelper.getInstance(this);
+        mySQLiteOpenHelper.insertData(this.getResources());
     }
 }
