@@ -36,7 +36,7 @@
             android:label="@string/title_activity_gallery"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Template"
+            android:name=".TemplateActivity"
             android:label="@string/title_activity_template"
             android:screenOrientation="portrait"/>
         <activity
