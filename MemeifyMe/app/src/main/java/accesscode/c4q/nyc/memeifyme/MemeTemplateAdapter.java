@@ -50,11 +50,13 @@ public class MemeTemplateAdapter extends BaseAdapter {
     public View getView(int i, View newView, ViewGroup viewGroup) {
 
         if (newView ==null){
+            //TODO
             //newView =mLayoutInflater.inflate(R.layout.memes_list_template,viewGroup,false);
 
         }
         ButterKnife.bind(this,newView);
         Picasso.with(mContext).load(getItem(i).getRes_ID()).into(mImageView);
+        //TODO
         //mTextView.setText(getItem(i).getTitle());
         return newView;
     }
