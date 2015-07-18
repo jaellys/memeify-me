@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +24,7 @@ public class MemeTemplateAdapter extends BaseAdapter {
     private LayoutInflater mLayoutInflater;
 
     @Bind(R.id.meme)ImageView mImageView;
-    @Bind(R.id.memeTitle)TextView mTextView;
+   // @Bind(R.id.memeTitle)TextView mTextView;
 
     public MemeTemplateAdapter (Context mContext,List<MemeTemplate> memeTemplateList){
         this.mContext =mContext;
@@ -56,7 +55,7 @@ public class MemeTemplateAdapter extends BaseAdapter {
         }
         ButterKnife.bind(this,newView);
         Picasso.with(mContext).load(getItem(i).getRes_ID()).into(mImageView);
-        mTextView.setText(getItem(i).getTitle());
+        //mTextView.setText(getItem(i).getTitle());
         return newView;
     }
 
