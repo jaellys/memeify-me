@@ -19,7 +19,7 @@ public class MemeTemplListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO
-        //setContentView(R.layout.memes_list);
+        setContentView(R.layout.memes_list);
         //listview = (ListView)findViewById(R.id.listView);
 
     }
