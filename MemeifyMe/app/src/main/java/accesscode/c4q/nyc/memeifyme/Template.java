@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
+import accesscode.c4q.nyc.memeifyme.database.MyDB;
+
 
 public class Template extends ActionBarActivity {
     private Spinner drop;
@@ -37,14 +41,23 @@ public class Template extends ActionBarActivity {
     private Bitmap photo;
     private static final String photoSave = "photo";
 
+    // database
+    MyDB dba;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template);
 
+        dba = new MyDB(this);
+        dba.open();
+
+
+
         initializeViews();
         setTypeAssets();
+
 
         // Set up spinner and set drawables on select
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.memeArray, android.R.layout.simple_spinner_item);
@@ -55,41 +68,61 @@ public class Template extends ActionBarActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String str = adapterView.getItemAtPosition(i).toString().toLowerCase();
                 Drawable d;
+
+
                 switch (str) {
                     case "cool":
                         d = getResources().getDrawable(R.drawable.cool);
+                        dba.insertUser("cool",drawableToBitmap(d));
                         draw(d);
                         break;
                     case "yao ming":
                         d = getResources().getDrawable(R.drawable.yaoming);
+                        dba.insertUser("yao ming",drawableToBitmap(d));
+
                         draw(d);
                         break;
                     case "evil plotting raccoon":
                         d = getResources().getDrawable(R.drawable.evilplottingraccoon);
+
+                        dba.insertUser("evil plotting raccoon",drawableToBitmap(d));
+
                         draw(d);
                         break;
                     case "philosoraptor":
                         d = getResources().getDrawable(R.drawable.philosoraptor);
+                        dba.insertUser("philosoraptor",drawableToBitmap(d));
+
                         draw(d);
                         break;
                     case "socially awkward penguin":
                         d = getResources().getDrawable(R.drawable.sociallyawkwardpenguin);
+                        dba.insertUser("socially awkward penguin",drawableToBitmap(d));
+
                         draw(d);
                         break;
                     case "success kid":
                         d = getResources().getDrawable(R.drawable.successkid);
+                        dba.insertUser("success kid",drawableToBitmap(d));
+
                         draw(d);
                         break;
                     case "scumbag steve":
                         d = getResources().getDrawable(R.drawable.scumbagsteve);
+                        dba.insertUser("scumbag steve",drawableToBitmap(d));
+
                         draw(d);
                         break;
                     case "one does not simply":
                         d = getResources().getDrawable(R.drawable.onedoesnotsimply);
+                        dba.insertUser("one does not simply",drawableToBitmap(d));
+
                         draw(d);
                         break;
                     case "i don't always":
                         d = getResources().getDrawable(R.drawable.idontalways);
+                        dba.insertUser("i don't always",drawableToBitmap(d));
+
                         draw(d);
                         break;
                 }
@@ -232,4 +265,28 @@ public class Template extends ActionBarActivity {
         builder.setView(layout);
         return builder.create();
     }
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+
 }
