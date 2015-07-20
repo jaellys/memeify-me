@@ -2,13 +2,9 @@ package accesscode.c4q.nyc.memeifyme;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.FrameLayout;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -25,6 +21,8 @@ public class SaveMeme {
 
         return bm;
     }
+
+
 
     public void saveMeme(Bitmap bm, String imgName, ContentResolver c) {
 
