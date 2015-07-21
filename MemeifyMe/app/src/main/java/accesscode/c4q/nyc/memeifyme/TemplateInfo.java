@@ -41,4 +41,13 @@ public class TemplateInfo {
         this.description = description;
     }
 
+    public TemplateInfo(){
+
+    }
+
+
+    @Override
+    public String toString() {
+        return description;
+    }
 }

@@ -28,11 +28,10 @@ import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class TemplateActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class TemplateActivity extends ActionBarActivity {
     private Spinner drop;
     private ViewSwitcher switcher;
     private ImageView camera_image_vanilla, camera_image_demotivational;
@@ -41,8 +40,7 @@ public class TemplateActivity extends ActionBarActivity implements AdapterView.O
     private ToggleButton toggle;
     private Bitmap photo;
     private static final String photoSave = "photo";
-    private TemplateDatabaseHelper templateHelper;
-    private ArrayAdapter<String> dataAdapter;
+    private ArrayAdapter<TemplateInfo> adapter;
 
 
     @Override
@@ -53,6 +51,8 @@ public class TemplateActivity extends ActionBarActivity implements AdapterView.O
         initializeViews();
         setTypeAssets();
         new DatabaseTask().execute();
+
+
 
         // Listeners to pop-up dialog and get input
         caption_top_vanilla.setOnClickListener(new View.OnClickListener() {
@@ -185,31 +185,21 @@ public class TemplateActivity extends ActionBarActivity implements AdapterView.O
         return builder.create();
     }
 
-    public void loadDataToSpinner(List<TemplateInfo> list){
-
-        ArrayList<String> memeNames = new ArrayList<>();
-
-        for(TemplateInfo meme : list){
-            memeNames.add(meme.getDescription());
-        }
-
-        dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, memeNames);
-
-    }
-
     public class DatabaseTask extends AsyncTask<Void, Void, List<TemplateInfo>>{
 
         @Override
         protected List<TemplateInfo> doInBackground(Void... params) {
-            templateHelper = TemplateDatabaseHelper.getInstance(getApplicationContext());
 
-            try {
-                return templateHelper.loadData();
+            try{
+               TemplateDatabaseHelper dbHelper = TemplateDatabaseHelper.getInstance(TemplateActivity.this);
 
+                dbHelper.insertData();
+
+                return dbHelper.loadData();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             return null;
         }
 
@@ -217,18 +207,26 @@ public class TemplateActivity extends ActionBarActivity implements AdapterView.O
         protected void onPostExecute(List<TemplateInfo> templateInfos) {
             super.onPostExecute(templateInfos);
 
-            drop.setAdapter(dataAdapter);
-            loadDataToSpinner(templateInfos);
+            // Set up spinner and set drawables on select
+            adapter = new ArrayAdapter(TemplateActivity.this,
+                    android.R.layout.simple_spinner_item, templateInfos);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            drop.setAdapter(adapter);
+            drop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    TemplateInfo memeInfo = adapter.getItem(i);
+                    Drawable memeDrawable = getResources().getDrawable(memeInfo.getResourceID());
+                    draw(memeDrawable);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
 
         }
-
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TemplateInfo item = (TemplateInfo) parent.getItemAtPosition(position);
-        Drawable d = getResources().getDrawable(item.getResourceID());
-        draw(d);
-
-    }
 }

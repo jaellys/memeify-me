@@ -2,6 +2,7 @@ package accesscode.c4q.nyc.memeifyme;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -22,7 +23,7 @@ public class TemplateDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public static synchronized TemplateDatabaseHelper getInstance(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new TemplateDatabaseHelper(context.getApplicationContext());
+            INSTANCE = new TemplateDatabaseHelper(context);
         }
         return INSTANCE;
     }
@@ -33,6 +34,7 @@ public class TemplateDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
+
         try {
             TableUtils.createTable(connectionSource, TemplateInfo.class);
         } catch (SQLException e) {
@@ -52,7 +54,9 @@ public class TemplateDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public void insertData() {
 
+
         try {
+            deleteAll();
             INSTANCE.insertRow(R.drawable.cool,"Cool");
             INSTANCE.insertRow(R.drawable.yaoming, "Yao Ming");
             INSTANCE.insertRow(R.drawable.evilplottingraccoon, "Evil Plotting Raccoon");
@@ -65,19 +69,27 @@ public class TemplateDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            Log.d("insertError", e.toString());
+
         }
 
 
     }
 
+    public void deleteAll() throws SQLException {
+        List<TemplateInfo> list = getDao(TemplateInfo.class).queryForAll();
+        getDao(TemplateInfo.class).delete(list);
+    }
+
     public void insertRow(int resourceID, String description) throws SQLException {
         TemplateInfo templateMeme = new TemplateInfo(resourceID, description);
-        getDao(TemplateInfo.class).create(templateMeme);
+        getDao(TemplateInfo.class).createIfNotExists(templateMeme);
+
+
     }
 
     //Returns a list of all the objects in the table
     public List<TemplateInfo> loadData() throws SQLException {
-        insertData();
         return getDao(TemplateInfo.class).queryForAll();
     }
 
